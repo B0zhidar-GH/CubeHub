@@ -1,0 +1,104 @@
+
+{% extends "base.html" %}
+
+{% block title %}Cubers | CubeHub{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>Meet the Cubers</h2>
+    <p>Discover the community, learn about cubers, and register a new member.</p>
+</div>
+
+<section class="form-section">
+    <h3>Register a Cuber</h3>
+    <p>Add a new member to the CubeHub community.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="error-message">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-field">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <p class="field-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">
+            Register Cuber
+        </button>
+    </form>
+</section>
+
+<section class="table-section">
+    <h3>Registered Cubers</h3>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Favourite Cube</th>
+                    <th>Bio</th>
+                    <th>Registration Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for cuber in cubers %}
+                    <tr>
+                        <td>
+                            {{ cuber.first_name }} {{ cuber.last_name }}
+                        </td>
+
+                        <td>{{ cuber.country }}</td>
+
+                        <td>{{ cuber.favourite_cube }}</td>
+
+                        <td>{{ cuber.bio }}</td>
+
+                        <td>{{ cuber.date_of_registration|date:"d M Y" }}</td>
+
+                        <td>
+                            <a href="{% url 'cuber_edit' cuber.id %}" class="btn">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'cuber_delete' cuber.id %}" class="btn">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            No cubers have registered yet.
+                            Add the first one above!
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

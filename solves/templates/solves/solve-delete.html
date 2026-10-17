@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Solve | CubeHub{% endblock %}
+
+{% block content %}
+
+<h2>Delete Solve</h2>
+
+<p>Are you sure you want to delete this solve?</p>
+
+<ul>
+    <li><strong>Cuber:</strong> {{ solve.cuber }}</li>
+    <li><strong>Cube:</strong> {{ solve.cube }}</li>
+    <li><strong>Time:</strong> {{ solve.time }} seconds</li>
+    <li><strong>Scramble:</strong> {{ solve.scramble }}</li>
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+
+    <button type="submit">Yes, delete this solve</button>
+    <a href="{% url 'solve_list' %}">Cancel</a>
+</form>
+
+{% endblock %}

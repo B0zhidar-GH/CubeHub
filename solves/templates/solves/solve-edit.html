@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Solve | CubeHub{% endblock %}
+
+{% block content %}
+
+<h2>Edit Solve</h2>
+
+<p>Update the details of your solve below.</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Save Changes</button>
+    <a href="{% url 'solve_list' %}">Cancel</a>
+</form>
+
+{% endblock %}

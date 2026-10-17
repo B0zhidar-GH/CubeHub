@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Home | CubeHub{% endblock %}
+
+{% block content %}
+
+<section class="welcome">
+    <h2>Welcome to CubeHub!</h2>
+
+    <p>
+        Your personal hub for tracking speedcubing solves,
+        exploring cubes, and following your progress.
+    </p>
+
+    <p>
+        Keep track of your times and build your speedcubing history
+        one solve at a time.
+    </p>
+
+    <p>
+        <a href="{% url 'solve_list' %}">View My Solves</a>
+    </p>
+</section>
+
+{% endblock %}

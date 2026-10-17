@@ -1,0 +1,103 @@
+
+{% extends "base.html" %}
+
+{% block title %}Cubes | CubeHub{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h2>Explore Cubes</h2>
+    <p>Browse the puzzles, events, brands, and cubers in CubeHub.</p>
+</div>
+
+<section class="form-section">
+    <h3>Add a New Cube</h3>
+    <p>Register a cube and select its owners.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="error-message">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-field">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+
+                {% for error in field.errors %}
+                    <p class="field-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary">
+            Add Cube
+        </button>
+    </form>
+</section>
+
+<section class="table-section">
+    <h3>Registered Cubes</h3>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Cube</th>
+                    <th>Category / Event</th>
+                    <th>Brand</th>
+                    <th>Owners</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for cube in cubes %}
+                    <tr>
+                        <td>{{ cube.get_cube_display }}</td>
+                        <td>{{ cube.get_category_event_display }}</td>
+                        <td>{{ cube.brand }}</td>
+                        <td>
+                            {% for owner in cube.owners.all %}
+                                {{ owner.first_name }} {{ owner.last_name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                <span class="muted-text">
+                                    No registered owners
+                                </span>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{% url 'cube_edit' cube.id %}" class="btn">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'cube_delete' cube.id %}" class="btn">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            No cubes have been registered yet.
+                            Add your first cube above!
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

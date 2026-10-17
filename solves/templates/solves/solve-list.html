@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}My Solves | CubeHub{% endblock %}
+
+{% block content %}
+
+<h2>Add Solve</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Add Solve</button>
+</form>
+
+<hr>
+
+<h2>Previous Solves</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Time (seconds)</th>
+            <th>Cube</th>
+            <th>Cuber</th>
+            <th>Scramble</th>
+            <th>Date Created</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for solve in solves %}
+            <tr>
+                <td>{{ solve.time }}</td>
+                <td>{{ solve.cube }}</td>
+                <td>{{ solve.cuber }}</td>
+                <td>{{ solve.scramble }}</td>
+                <td>{{ solve.date_created|date:"d M Y, H:i" }}</td>
+                <td>
+                    <a href="{% url 'solve_edit' solve.id %}">Edit</a>
+                    |
+                    <a href="{% url 'solve_delete' solve.id %}">Delete</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">No solves yet. Add your first solve above!</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
