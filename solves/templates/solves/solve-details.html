@@ -1,0 +1,38 @@
+<!-- solves/templates/solves/solve-details.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Solve Details | CubeHub{% endblock %}
+
+{% block content %}
+<section class="page-container">
+    <h1>Solve Details</h1>
+
+    <article class="detail-card">
+        <h2>{{ solve.cuber.first_name }} {{ solve.cuber.last_name }}</h2>
+
+        <dl>
+            <dt>Cube</dt>
+            <dd>{{ solve.cube.get_cube_display }}</dd>
+
+            <dt>Event</dt>
+            <dd>{{ solve.cube.get_category_event_display }}</dd>
+
+            <dt>Solve time</dt>
+            <dd>{{ solve.time }} seconds</dd>
+
+            <dt>Scramble</dt>
+            <dd>{{ solve.scramble }}</dd>
+
+            <dt>Date recorded</dt>
+            <dd>{{ solve.date_created|date:"d M Y, H:i" }}</dd>
+        </dl>
+    </article>
+
+    <nav class="page-actions">
+        <a href="{% url 'solve_list' %}">Back to solves</a>
+        <a href="{% url 'solve_edit' solve.id %}">Edit solve</a>
+        <a href="{% url 'solve_delete' solve.id %}">Delete solve</a>
+    </nav>
+</section>
+{% endblock %}

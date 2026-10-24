@@ -1,55 +1,120 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load solve_filters %}
 
-{% block title %}My Solves | CubeHub{% endblock %}
+{% block title %}Solves | CubeHub{% endblock %}
 
 {% block content %}
+<section class="page-container">
+    <h1>Solves</h1>
+    <p>Explore solve times recorded by the CubeHub community.</p>
 
-<h2>Add Solve</h2>
+    <!-- Create a solve -->
+    <section class="create-section">
+        <h2>Add a Solve</h2>
 
-<form method="post">
-    {% csrf_token %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Solve</button>
+        </form>
+    </section>
 
-    {{ form.as_p }}
+    <!-- Filter and sort -->
+    <section class="filter-section">
+        <h2>Filter Solves</h2>
 
-    <button type="submit">Add Solve</button>
-</form>
+        <form method="get">
+            <div class="form-group">
+                <label for="cube">Cube</label>
+                <select name="cube" id="cube">
+                    <option value="">All cubes</option>
+                    {% for cube_item in cubes_type %}
+                        <option value="{{ cube_item.id }}"
+                            {% if cube == cube_item.id|stringformat:"s" %}selected{% endif %}>
+                            {{ cube_item }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-<hr>
+            <div class="form-group">
+                <label for="cuber">Cuber</label>
+                <select name="cuber" id="cuber">
+                    <option value="">All cubers</option>
+                    {% for cuber_item in cubers_type %}
+                        <option value="{{ cuber_item.id }}"
+                            {% if cuber == cuber_item.id|stringformat:"s" %}selected{% endif %}>
+                            {{ cuber_item.first_name }} {{ cuber_item.last_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-<h2>Previous Solves</h2>
+            <div class="form-group">
+                <label for="scramble">Scramble contains</label>
+                <input
+                    type="text"
+                    name="scramble"
+                    id="scramble"
+                    value="{{ scramble }}"
+                    placeholder="Search scramble..."
+                >
+            </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Time (seconds)</th>
-            <th>Cube</th>
-            <th>Cuber</th>
-            <th>Scramble</th>
-            <th>Date Created</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+            <div class="form-group">
+                <label for="sort">Sort by time</label>
+                <select name="sort" id="sort">
+                    <option value="time"
+                        {% if chosen_sort == 'time' %}selected{% endif %}>
+                        Fastest first
+                    </option>
+                    <option value="-time"
+                        {% if chosen_sort == '-time' %}selected{% endif %}>
+                        Slowest first
+                    </option>
+                </select>
+            </div>
 
-    <tbody>
+            <button type="submit">Apply filters</button>
+            <a href="{% url 'solve_list' %}">Reset</a>
+        </form>
+    </section>
+
+
+
+    <!-- Solves list -->
+    <section class="solves-list">
+        <h2>Recorded Solves</h2>
+
         {% for solve in solves %}
-            <tr>
-                <td>{{ solve.time }}</td>
-                <td>{{ solve.cube }}</td>
-                <td>{{ solve.cuber }}</td>
-                <td>{{ solve.scramble }}</td>
-                <td>{{ solve.date_created|date:"d M Y, H:i" }}</td>
-                <td>
-                    <a href="{% url 'solve_edit' solve.id %}">Edit</a>
-                    |
-                    <a href="{% url 'solve_delete' solve.id %}">Delete</a>
-                </td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="6">No solves yet. Add your first solve above!</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+            <article class="solve-card">
+                <h3>{{ solve.time|seconds }}</h3>
 
+                <p>
+                    <strong>Cuber:</strong> {{ solve.cuber }}
+                </p>
+
+                <p>
+                    <strong>Cube:</strong> {{ solve.cube }}
+                </p>
+
+                <p>
+                    <strong>Scramble:</strong> {{ solve.scramble }}
+                </p>
+
+                <p>
+                    <strong>Date:</strong> {{ solve.date_created|date:"M d, Y H:i" }}
+                </p>
+
+                <nav class="page-actions">
+                    <a href="{% url 'solve_details' solve.id %}">Details</a>
+                    <a href="{% url 'solve_edit' solve.id %}">Edit</a>
+                    <a href="{% url 'solve_delete' solve.id %}">Delete</a>
+                </nav>
+            </article>
+        {% empty %}
+            <p>No solves match your filters. Try changing the filters or add a solve.</p>
+        {% endfor %}
+    </section>
+</section>
 {% endblock %}

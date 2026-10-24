@@ -1,103 +1,109 @@
-
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block title %}Cubes | CubeHub{% endblock %}
 
 {% block content %}
+<section class="page-container">
+    <h1>Explore Cubes</h1>
+    <p>Browse the cubes in the CubeHub collection.</p>
 
-<div class="page-header">
-    <h2>Explore Cubes</h2>
-    <p>Browse the puzzles, events, brands, and cubers in CubeHub.</p>
-</div>
+    <!-- Create a cube -->
+    <section class="create-section">
+        <h2>Add a Cube</h2>
 
-<section class="form-section">
-    <h3>Add a New Cube</h3>
-    <p>Register a cube and select its owners.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Cube</button>
+        </form>
+    </section>
 
-    <form method="post">
-        {% csrf_token %}
+    <!-- Filter form -->
+    <section class="filter-section">
+        <h2>Filter Cubes</h2>
 
-        {% if form.non_field_errors %}
-            <div class="error-message">
-                {{ form.non_field_errors }}
+        <form method="get">
+            <div class="form-group">
+                <label for="cube">Cube type</label>
+                <select name="cube" id="cube">
+                    <option value="">All cube types</option>
+                    {% for value, label in cubes_type %}
+                        <option value="{{ value }}"
+                            {% if cube == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
-        {% endif %}
 
-        {% for field in form %}
-            <div class="form-field">
-                <label for="{{ field.id_for_label }}">
-                    {{ field.label }}
-                </label>
-
-                {{ field }}
-
-                {% if field.help_text %}
-                    <small>{{ field.help_text }}</small>
-                {% endif %}
-
-                {% for error in field.errors %}
-                    <p class="field-error">{{ error }}</p>
-                {% endfor %}
+            <div class="form-group">
+                <label for="category_event">Event category</label>
+                <select name="category_event" id="category_event">
+                    <option value="">All categories</option>
+                    {% for value, label in category_event_type %}
+                        <option value="{{ value }}"
+                            {% if category_event == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
+
+            <div class="form-group">
+                <label for="brand">Brand</label>
+                <select name="brand" id="brand">
+                    <option value="">All brand_type</option>
+                    {% for brand_option in brand_type %}
+                        <option value="{{ brand_option }}"
+                            {% if brand == brand_option %}selected{% endif %}>
+                            {{ brand_option }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit">Apply filters</button>
+            <a href="{% url 'cube_list' %}">Reset</a>
+        </form>
+    </section>
+
+
+
+    <!-- Cube list -->
+    <section class="cubes-list">
+        <h2>Cube Collection</h2>
+
+        {% for cube_item in cubes %}
+            <article class="cube-card">
+                <h3>{{ cube_item.get_cube_display }}</h3>
+
+                <p>
+                    <strong>Event category:</strong>
+                    {{ cube_item.get_category_event_display }}
+                </p>
+
+                <p>
+                    <strong>Brand:</strong> {{ cube_item.brand }}
+                </p>
+
+                <p>
+                    <strong>Owners:</strong>
+                    {% for owner in cube_item.owners.all %}
+                        {{ owner.first_name }} {{ owner.last_name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No owners added
+                    {% endfor %}
+                </p>
+
+                <nav class="page-actions">
+                    <a href="{% url 'cube_details' cube_item.id %}">Details</a>
+                    <a href="{% url 'cube_edit' cube_item.id %}">Edit</a>
+                    <a href="{% url 'cube_delete' cube_item.id %}">Delete</a>
+                </nav>
+            </article>
+        {% empty %}
+            <p>No cubes match your filters. Try different options or add a cube.</p>
         {% endfor %}
-
-        <button type="submit" class="btn btn-primary">
-            Add Cube
-        </button>
-    </form>
+    </section>
 </section>
-
-<section class="table-section">
-    <h3>Registered Cubes</h3>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Cube</th>
-                    <th>Category / Event</th>
-                    <th>Brand</th>
-                    <th>Owners</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for cube in cubes %}
-                    <tr>
-                        <td>{{ cube.get_cube_display }}</td>
-                        <td>{{ cube.get_category_event_display }}</td>
-                        <td>{{ cube.brand }}</td>
-                        <td>
-                            {% for owner in cube.owners.all %}
-                                {{ owner.first_name }} {{ owner.last_name }}{% if not forloop.last %}, {% endif %}
-                            {% empty %}
-                                <span class="muted-text">
-                                    No registered owners
-                                </span>
-                            {% endfor %}
-                        </td>
-                        <td>
-                            <a href="{% url 'cube_edit' cube.id %}" class="btn">
-                                Edit
-                            </a>
-
-                            <a href="{% url 'cube_delete' cube.id %}" class="btn">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="5" class="empty-state">
-                            No cubes have been registered yet.
-                            Add your first cube above!
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</section>
-
 {% endblock %}

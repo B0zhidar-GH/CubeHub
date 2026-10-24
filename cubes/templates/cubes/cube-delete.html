@@ -1,37 +1,33 @@
-
 {% extends "base.html" %}
 
 {% block title %}Delete Cube | CubeHub{% endblock %}
 
 {% block content %}
+<section class="page-container">
+    <div class="page-header">
+        <h2>Delete Cube</h2>
+        <p>Please confirm your choice before continuing.</p>
+    </div>
 
-<div class="page-header">
-    <h2>Delete Cube</h2>
-    <p>Review your choice before continuing.</p>
-</div>
+    <section class="form-section">
+        <h3>Confirm Deletion</h3>
 
-<section class="form-section">
-    <h3>Confirm Deletion</h3>
+        <p>
+            Are you sure you want to delete
+            <strong>{{ cube.get_cube_display }}</strong>
+            ({{ cube.get_category_event_display }})?
+        </p>
 
-    <p>
-        Are you sure you want to delete
-        <strong>{{ cube.get_cube_display }}</strong>
-        ({{ cube.get_category_event_display }})?
-    </p>
+        <p>
+            This action cannot be undone. Any solves associated with
+            this cube will also be deleted.
+        </p>
 
-    <p>This action cannot be undone.</p>
-
-    <form method="post">
-        {% csrf_token %}
-
-        <button type="submit" class="btn btn-primary">
-            Yes, Delete Cube
-        </button>
-
-        <a href="{% url 'cube_list' %}" class="btn">
-            Cancel
-        </a>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete Cube</button>
+            <a href="{% url 'cube_list' %}">Cancel</a>
+        </form>
+    </section>
 </section>
-
 {% endblock %}

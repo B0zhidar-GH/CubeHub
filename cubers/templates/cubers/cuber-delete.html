@@ -1,39 +1,32 @@
-
 {% extends "base.html" %}
 
 {% block title %}Delete Cuber | CubeHub{% endblock %}
 
 {% block content %}
+<section class="page-container">
+    <div class="page-header">
+        <h2>Delete Cuber</h2>
+        <p>Please confirm your choice before continuing.</p>
+    </div>
 
-<div class="page-header">
-    <h2>Delete Cuber</h2>
-    <p>Confirm whether you want to remove this member.</p>
-</div>
+    <section class="form-section">
+        <h3>Confirm Deletion</h3>
 
-<section class="form-section">
-    <h3>Confirm Deletion</h3>
+        <p>
+            Are you sure you want to delete
+            <strong>{{ cuber.first_name }} {{ cuber.last_name }}</strong>?
+        </p>
 
-    <p>
-        Are you sure you want to delete
-        <strong>{{ cuber.first_name }} {{ cuber.last_name }}</strong>?
-    </p>
+        <p>
+            This action cannot be undone. Any solves associated with
+            this cuber will also be deleted.
+        </p>
 
-    <p>
-        This action cannot be undone. Any solves associated with this cuber
-        will also be deleted because of the model's cascade behavior.
-    </p>
-
-    <form method="post">
-        {% csrf_token %}
-
-        <button type="submit" class="btn btn-primary">
-            Yes, Delete Cuber
-        </button>
-
-        <a href="{% url 'cuber_list' %}" class="btn">
-            Cancel
-        </a>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Yes, Delete Cuber</button>
+            <a href="{% url 'cuber_list' %}">Cancel</a>
+        </form>
+    </section>
 </section>
-
 {% endblock %}

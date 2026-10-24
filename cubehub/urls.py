@@ -24,5 +24,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('cubers/', include('cubers.urls')),
     path('cubes/', include('cubes.urls')),
-    
 ]
+handler404 = 'cubehub.views.custom_404'

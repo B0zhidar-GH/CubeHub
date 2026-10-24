@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.cuber_list, name='cuber_list'),
     path('<int:cuber_id>/edit/', views.cuber_edit, name='cuber_edit'),
 
-    path('<int:cuber_id>/delete/', views.cuber_delete, name='cuber_delete')
+    path('<int:cuber_id>/delete/', views.cuber_delete, name='cuber_delete'),
+    path('<int:cuber_id>/details/', views.cuber_details, name='cuber_details'),
 ]

@@ -6,5 +6,7 @@ urlpatterns = [
 
     path('<int:cube_id>/edit/', views.cube_edit, name='cube_edit'),
 
-    path('<int:cube_id>/delete/', views.cube_delete, name='cube_delete')
+    path('<int:cube_id>/delete/', views.cube_delete, name='cube_delete'),
+
+    path('<int:cube_id>/details/', views.cube_details, name='cube_details')
 ]

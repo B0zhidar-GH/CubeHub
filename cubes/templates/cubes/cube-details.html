@@ -1,0 +1,41 @@
+<!-- cubes/templates/cubes/cube-details.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Cube Details | CubeHub{% endblock %}
+
+{% block content %}
+<section class="page-container">
+    <h1>Cube Details</h1>
+
+    <article class="detail-card">
+        <h2>{{ cube.get_cube_display }}</h2>
+
+        <dl>
+            <dt>Cube type</dt>
+            <dd>{{ cube.get_cube_display }}</dd>
+
+            <dt>Category / Event</dt>
+            <dd>{{ cube.get_category_event_display }}</dd>
+
+            <dt>Brand</dt>
+            <dd>{{ cube.brand|default:"Not specified" }}</dd>
+
+            <dt>Owners</dt>
+            <dd>
+                {% for owner in cube.owners.all %}
+                    {{ owner.first_name }} {{ owner.last_name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No owners have been added.
+                {% endfor %}
+            </dd>
+        </dl>
+    </article>
+
+    <nav class="page-actions">
+        <a href="{% url 'cube_list' %}">Back to cubes</a>
+        <a href="{% url 'cube_edit' cube.id %}">Edit cube</a>
+        <a href="{% url 'cube_delete' cube.id %}">Delete cube</a>
+    </nav>
+</section>
+{% endblock %}

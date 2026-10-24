@@ -69,21 +69,33 @@
             padding: 20px;
             color: #666;
         }
+        
+
+        /* Links used as action buttons */
+        .page-actions a,
+        a.btn {
+            display: inline-block;
+            padding: 8px 14px;
+            margin: 4px;
+            background-color: #e8edf7;
+            color: #172554;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .page-actions a:hover,
+        a.btn:hover {
+            background-color: #d1dbef;
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 
 <body>
     <header>
-        <h1>CubeHub</h1>
-
-        <nav>
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'solve_list' %}">Solves</a>
-            <a href="{% url 'cuber_list' %}">Cubers</a>
-            <a href="{% url 'cube_list' %}">Cubes</a>
-            <a href="/admin/">Admin</a>
-
-        </nav>
+        {% include 'partials/navbar.html' %}
     </header>
 
     <main>
@@ -92,7 +104,7 @@
     </main>
 
     <footer>
-        CubeHub &copy; {% now "Y" %}
+        {% include 'partials/footer.html' %}
     </footer>
 </body>
 </html>

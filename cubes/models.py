@@ -1,3 +1,4 @@
+from django.core.validators import MaxLengthValidator
 from django.db import models
 
 # Create your models here.
@@ -49,9 +50,13 @@ class Cube(models.Model):
 
     cube = models.CharField(max_length=20, choices=CubeChoices.choices)
     category_event = models.CharField(max_length=20, choices=CategoryEvent.choices)
-    brand = models.CharField(max_length=20, blank=True, default='N/A')
+    brand = models.CharField(max_length=20, validators = [
+        MaxLengthValidator(limit_value=20,
+                           message='This field cannot be longer than 20 characters')
+    ])
+    date_of_registration = models.DateTimeField(auto_now_add=True)
 
-    owners = models.ManyToManyField('cubers.Cuber', related_name='cubes', blank=True)
+    owners = models.ManyToManyField('cubers.Cuber', related_name='cubes')
 
     def __str__(self):
         return (

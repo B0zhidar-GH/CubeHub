@@ -1,0 +1,34 @@
+href
+{% extends 'base.html' %}
+
+{% block title %}{{ cuber.first_name }} {{ cuber.last_name }} | CubeHub{% endblock %}
+
+{% block content %}
+<section class="page-container">
+    <h1>Cuber Details</h1>
+
+    <article class="detail-card">
+        <h2>{{ cuber.first_name }} {{ cuber.last_name }}</h2>
+
+        <dl>
+            <dt>Country</dt>
+            <dd>{{ cuber.country }}</dd>
+
+            <dt>Favourite cube</dt>
+            <dd>{{ cuber.favourite_cube }}</dd>
+
+            <dt>Biography</dt>
+            <dd>{{ cuber.bio|default:"This cuber has not added a bio yet" }}</dd>
+
+            <dt>Registration date</dt>
+            <dd>{{ cuber.date_of_registration|date:"d M Y, H:i" }}</dd>
+        </dl>
+    </article>
+
+    <nav class="page-actions">
+        <a href="{% url 'cuber_list' %}">Back to cubers</a>
+        <a href="{% url 'cuber_edit' cuber.id %}">Edit cuber</a>
+        <a href="{% url 'cuber_delete' cuber.id %}">Delete cuber</a>
+    </nav>
+</section>
+{% endblock %}
