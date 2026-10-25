@@ -1,0 +1,708 @@
+
+/* ========================================
+   CubeHub — Global Styles
+   ======================================== */
+
+:root {
+    --color-ink: #172033;
+    --color-muted: #657087;
+    --color-primary: #155eef;
+    --color-primary-hover: #1049bd;
+    --color-accent: #b8f34a;
+    --color-surface: #ffffff;
+    --color-page: #f5f7fb;
+    --color-border: #e0e6ef;
+    --color-danger: #b42318;
+    --color-danger-bg: #fff1f0;
+
+    --shadow-sm: 0 2px 8px rgb(23 32 51 / 6%);
+    --shadow-md: 0 12px 30px rgb(23 32 51 / 9%);
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+
+    --content-width: 1120px;
+}
+
+/* Reset and base typography */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+img {
+    height: auto;
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    text-underline-offset: 0.2em;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0 0 0.65em;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+/* Keyboard accessibility */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgb(21 94 239 / 35%);
+    outline-offset: 3px;
+}
+
+/* Main content */
+
+.container,
+.page-container {
+    width: min(calc(100% - 2rem), var(--content-width));
+    margin-inline: auto;
+}
+
+main {
+    min-height: 65vh;
+    padding-block: 2rem 4rem;
+}
+
+/* ========================================
+   Header and navigation
+   ======================================== */
+
+.site-header,
+.navbar {
+    background: #111a2e;
+    color: #ffffff;
+}
+
+.site-header {
+    position: relative;
+    z-index: 10;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    width: min(calc(100% - 2rem), var(--content-width));
+    min-height: 76px;
+    margin-inline: auto;
+    padding-block: 0.8rem;
+}
+
+.navbar-brand,
+.nav-brand,
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.navbar-brand:hover,
+.nav-brand:hover,
+.logo:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.navbar-nav,
+.nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navbar a:not(.btn),
+.nav-links a {
+    color: #e2e8f4;
+}
+
+.navbar a:not(.btn):hover,
+.nav-links a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.navbar .nav-link,
+.nav-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.94rem;
+    font-weight: 600;
+}
+
+.navbar .nav-link:hover,
+.nav-links a:hover {
+    background: rgb(255 255 255 / 8%);
+}
+
+/* Support the existing shared navbar partial.
+   This styles a nav element inside .site-header,
+   even if it doesn't have the .navbar class. */
+
+.site-header nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    width: min(calc(100% - 2rem), var(--content-width));
+    min-height: 76px;
+    margin-inline: auto;
+}
+
+.site-header nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-sm);
+    color: #e2e8f4;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.site-header nav a:hover {
+    background: rgb(255 255 255 / 8%);
+    color: var(--color-accent);
+}
+
+/* ========================================
+   Page headings, panels, and cards
+   ======================================== */
+
+.page-header {
+    margin-bottom: 1.75rem;
+}
+
+.page-header p,
+.muted,
+.text-muted {
+    color: var(--color-muted);
+}
+
+.panel,
+.card,
+.content-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.panel,
+.content-card {
+    padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.card {
+    padding: 1.25rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+/* ========================================
+   Buttons and action links
+   ======================================== */
+
+.btn,
+button,
+input[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.7rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--color-ink);
+    font: inherit;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+.btn:hover,
+button:hover,
+input[type="submit"]:hover {
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.btn-primary,
+button[type="submit"],
+input[type="submit"] {
+    background: var(--color-primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+    background: var(--color-primary-hover);
+    color: #ffffff;
+}
+
+.btn-secondary {
+    border-color: var(--color-border);
+    background: #ffffff;
+    color: var(--color-ink);
+}
+
+.btn-secondary:hover {
+    background: #f0f4fa;
+}
+
+.btn-accent {
+    background: var(--color-accent);
+    color: #1b2638;
+}
+
+.btn-accent:hover {
+    background: #a8e83b;
+    color: #1b2638;
+}
+
+/* Existing action links */
+
+.page-actions a,
+a.btn {
+    display: inline-block;
+    padding: 0.7rem 1rem;
+    margin: 0.25rem;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.page-actions a {
+    border: 1px solid var(--color-border);
+    background: #ffffff;
+    color: var(--color-ink);
+}
+
+.page-actions a:hover {
+    background: #f0f4fa;
+    text-decoration: none;
+}
+
+/* ========================================
+   Forms and validation messages
+   ======================================== */
+
+form {
+    max-width: 100%;
+}
+
+form p,
+.form-field {
+    margin-bottom: 1.15rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--color-ink);
+    font-size: 0.94rem;
+    font-weight: 700;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+select,
+textarea {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #cbd4e1;
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+    color: var(--color-ink);
+    font: inherit;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+select[multiple] {
+    min-height: 140px;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+    background: #eef1f6;
+    color: #657087;
+    cursor: not-allowed;
+}
+
+.helptext,
+.help-text {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+}
+
+.errorlist,
+.form-errors,
+.alert-error {
+    margin: 0.4rem 0 0.75rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #fecdca;
+    border-radius: var(--radius-sm);
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+    font-size: 0.92rem;
+}
+
+.errorlist {
+    list-style-position: inside;
+}
+
+.errorlist li + li {
+    margin-top: 0.25rem;
+}
+
+/* ========================================
+   Tables
+   ======================================== */
+
+.table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+th,
+td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: #f0f4fa;
+    color: #344054;
+    font-size: 0.83rem;
+    font-weight: 800;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+}
+
+tbody tr:hover {
+    background: #f8faff;
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/* Status badges and empty states */
+
+.badge,
+.tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: #eaf2ff;
+    color: #174ea6;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.empty-state {
+    padding: 2rem 1rem;
+    border: 1px dashed #cbd4e1;
+    border-radius: var(--radius-md);
+    color: var(--color-muted);
+    text-align: center;
+}
+
+/* ========================================
+   Footer
+   ======================================== */
+
+.site-footer,
+footer {
+    margin-top: 3rem;
+    padding: 1.75rem 1rem;
+    background: #111a2e;
+    color: #cbd5e1;
+    text-align: center;
+}
+
+.site-footer p,
+footer p {
+    margin: 0;
+}
+
+.site-footer a,
+footer a {
+    color: #ffffff;
+}
+
+/* ========================================
+   Responsive design
+   ======================================== */
+
+@media (max-width: 800px) {
+    .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.6rem;
+        padding-block: 1rem;
+    }
+
+    .navbar-nav,
+    .nav-links {
+        gap: 0.2rem;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    main {
+        padding-block: 1.25rem 2.5rem;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar-nav,
+    .nav-links,
+    .site-header nav {
+        align-items: stretch;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar .nav-link,
+    .nav-links a,
+    .site-header nav a {
+        width: 100%;
+    }
+
+    .btn,
+    button,
+    input[type="submit"] {
+        max-width: 100%;
+    }
+
+    th,
+    td {
+        padding: 0.7rem;
+    }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+
+/* ===== CubeHub template classes (fix for current templates) ===== */
+
+/* The base template already constrains the main element. Templates also
+   use .page-container, so let that inner wrapper fill the main area. */
+main.page-container > .page-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+/* Shared navbar: partial should use .navbar, .navbar-brand and .navbar-nav. */
+.site-header > .navbar {
+    width: min(calc(100% - 2rem), var(--content-width));
+}
+
+/* Sections used by the actual list templates. */
+.create-section,
+.filter-section,
+.form-section,
+.detail-card {
+    min-width: 0;
+    margin: 1.25rem 0;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.create-section h2,
+.filter-section h2,
+.form-section h2,
+.form-section h3 {
+    margin-top: 0;
+}
+
+/* Card grids use the exact class names found in the list templates. */
+.cubers-list,
+.cubes-list,
+.solves-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.cubers-list > h2,
+.cubes-list > h2,
+.solves-list > h2,
+.cubers-list > p,
+.cubes-list > p,
+.solves-list > p {
+    grid-column: 1 / -1;
+}
+
+.cuber-card,
+.cube-card,
+.solve-card {
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    overflow-wrap: anywhere;
+}
+
+.cuber-card h2,
+.cube-card h3,
+.solve-card h3 {
+    margin-top: 0;
+}
+
+/* Keep action links aligned and wrapped on narrow screens. */
+.page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.page-actions a {
+    margin: 0;
+}
+
+/* Field wrappers and custom error messages used in templates. */
+.form-group,
+.form-field {
+    margin-bottom: 1rem;
+}
+
+.error-message,
+.field-error {
+    color: var(--color-danger);
+}
+
+.error-message {
+    padding: 0.75rem 1rem;
+    border: 1px solid #fecdca;
+    border-radius: var(--radius-sm);
+    background: var(--color-danger-bg);
+}
+
+.error-page {
+    padding: clamp(1.5rem, 5vw, 3rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    text-align: center;
+}
+
+@media (max-width: 700px) {
+    .cubers-list,
+    .cubes-list,
+    .solves-list {
+        grid-template-columns: 1fr;
+    }
+}

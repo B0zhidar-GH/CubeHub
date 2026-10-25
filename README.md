@@ -1,76 +1,91 @@
+## Installation
+
+
 # CubeHub
 
-## Description
+CubeHub is a Django web application for managing speedcubers,
+Rubik's cubes, and solving records. It allows users to create and
+manage cuber profiles, maintain a cube collection, and record
+solving times.
 
-CubeHub is a Django web application for cubing enthusiasts. It allows users to manage cubers, cubes, and solve records through a web interface.
+## Features
 
-## Technologies
+- Create, view, edit, and delete cuber profiles.
+- Manage cubes and their owners.
+- Record and browse solve history.
+- Filter and sort available records.
+- Validate form submissions and display error messages.
+- Use a custom 404 page and a consistent navigation layout.
 
-- Python
-- Django 6.1.1
-- SQLite
-- HTML and CSS
+## Project structure
 
-## Project Structure
+The project consists of three Django apps:
 
-The project contains three Django applications:
+- `cubers` — manages cuber profiles.
+- `cubes` — manages cubes and their owners.
+- `solves` — manages solving records and time formatting.
 
-- **cubers** — manages cuber profiles.
-- **cubes** — manages cubes and their owners.
-- **solves** — manages solve records, including the cuber, cube, time, and scramble.
+The `cubehub` package contains the main Django settings,
+URL configuration, and project-level views.
 
-## Requirements
+## Database relationships
 
-- Python compatible with Django 6.1.1
-- pip
+- A solve references one cuber through a foreign key.
+- A solve references one cube through a foreign key.
+- Cubers and cubes have a many-to-many ownership relationship.
 
-## Installation and Setup
+The application uses SQLite and can be initialized by applying
+the migrations. Required objects can be created through the
+application interface without using Django admin.
 
-1. Clone or download the project.
-2. Open a terminal in the project root directory, where `manage.py` is located.
-3. Create and activate a virtual environment.
 
-   Windows PowerShell:
+### Prerequisites
+- Python 3.12 or another Python version supported by the project's dependencies
+- Git
 
-   ```powershell
-   python -m venv .venv
-   .venv\Scripts\Activate.ps1
+### Setup
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/B0zhidar-GH/CubeHub.git
+   cd CubeHub
    ```
 
-4. Install the dependencies:
+2. Create a virtual environment:
 
+   **Windows (PowerShell):**
    ```powershell
+   py -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   ```
+
+   **macOS/Linux:**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. Install the dependencies:
+
+   ```bash
    python -m pip install -r requirements.txt
    ```
 
-5. Apply database migrations:
+4. Apply database migrations:
 
-   ```powershell
+   ```bash
    python manage.py migrate
    ```
 
-6. Start the development server:
+5. Start the development server:
 
-   ```powershell
+   ```bash
    python manage.py runserver
    ```
 
-7. Open the local address shown in the terminal, usually http://127.0.0.1:8000/.
+6. Open `http://127.0.0.1:8000/` in your browser.
 
-## Database
-
-The project uses SQLite. The database is created when migrations are applied. The application should work with an empty database, and users can create records through the website.
-
-## Environment Variables and Security
-
-Document any environment variables required to configure the project here, including the Django secret key and debug setting if the project reads them from the environment.
-
-Do not publish real secret keys, passwords, or other credentials in the repository.
-
-## Usage
-
-Use the website navigation to access the cubers, cubes, and solves sections. Available actions depend on the features implemented in the application.
-
-## License
-
-This project was created for educational purposes.
+### Notes
+- Run the management commands from the directory containing `manage.py`.
+- The application uses Django's configured database. Migrations create the database schema; they do not necessarily populate it with sample data.

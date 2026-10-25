@@ -1,25 +1,130 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Home | CubeHub{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
 {% block content %}
 
-<section class="welcome">
-    <h2>Welcome to CubeHub!</h2>
+<div class="home-page">
 
-    <p>
-        Your personal hub for tracking speedcubing solves,
-        exploring cubes, and following your progress.
-    </p>
+    <section class="home-hero">
+        <div class="home-hero__inner">
 
-    <p>
-        Keep track of your times and build your speedcubing history
-        one solve at a time.
-    </p>
+            <div class="home-hero__content">
+                <span class="home-hero__eyebrow">
+                    Your speedcubing space
+                </span>
 
-    <p>
-        <a href="{% url 'solve_list' %}">View My Solves</a>
-    </p>
-</section>
+                <h1 class="home-hero__title">
+                    Your cubes.<br>
+                    Your solves.<br>
+                    <span>Your progress.</span>
+                </h1>
+
+                <p class="home-hero__description">
+                    Welcome to CubeHub — a place to organize your cube
+                    collection, explore cubers, and keep track of your
+                    speedsolving journey.
+                </p>
+
+                <div class="home-hero__actions">
+                    <a href="{% url 'solve_list' %}" class="btn btn-accent">
+                        Explore solves &rarr;
+                    </a>
+                </div>
+            </div>
+
+            <div class="home-hero__visual" aria-hidden="true">
+                <div class="home-cube-art">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="home-section">
+        <div class="home-section__heading">
+            <div>
+                <h2>Explore CubeHub</h2>
+                <p>
+                    Everything you need to keep your speedcubing
+                    collection and solve records organized.
+                </p>
+            </div>
+        </div>
+
+        <div class="home-feature-grid">
+
+            <article class="home-feature-card">
+                <div class="home-feature-icon" aria-hidden="true">
+                    C
+                </div>
+
+                <h3>Cubes</h3>
+
+                <p>
+                    Keep your cube collection organized and discover
+                    details about the puzzles you use.
+                </p>
+
+                <a href="{% url 'cube_list' %}">
+                    View cubes &rarr;
+                </a>
+            </article>
+
+            <article class="home-feature-card">
+                <div class="home-feature-icon" aria-hidden="true">
+                    P
+                </div>
+
+                <h3>Cubers</h3>
+
+                <p>
+                    Explore cuber profiles and the relationships
+                    between cubers and their cubes.
+                </p>
+
+                <a href="{% url 'cuber_list' %}">
+                    View cubers &rarr;
+                </a>
+            </article>
+
+            <article class="home-feature-card">
+                <div class="home-feature-icon" aria-hidden="true">
+                    S
+                </div>
+
+                <h3>Solves</h3>
+
+                <p>
+                    Browse solve records and follow your speedsolving
+                    history one solve at a time.
+                </p>
+
+                <a href="{% url 'solve_list' %}">
+                    View solves &rarr;
+                </a>
+
+
+            </article>
+
+        </div>
+    </section>
+
+
+</div>
 
 {% endblock %}

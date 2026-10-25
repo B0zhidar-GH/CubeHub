@@ -1,10 +1,10 @@
-<header>
-    <h1>CubeHub</h1>
+<div class="navbar">
+    <a class="navbar-brand" href="{% url 'home' %}">CubeHub</a>
 
-    <nav>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'solve_list' %}">Solves</a>
-        <a href="{% url 'cuber_list' %}">Cubers</a>
-        <a href="{% url 'cube_list' %}">Cubes</a>
+    <nav class="navbar-nav" aria-label="Main navigation">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+        <a class="nav-link" href="{% url 'solve_list' %}">Solves</a>
+        <a class="nav-link" href="{% url 'cuber_list' %}">Cubers</a>
+        <a class="nav-link" href="{% url 'cube_list' %}">Cubes</a>
     </nav>
-</header>
+</div>

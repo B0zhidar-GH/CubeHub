@@ -2,108 +2,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}CubeHub{% endblock %}</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            color: #222;
-        }
-
-        header {
-            background-color: #172554;
-            color: white;
-            padding: 18px 30px;
-        }
-
-        header h1 {
-            margin: 0 0 12px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-right: 20px;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 24px;
-            background-color: white;
-            border-radius: 8px;
-        }
-
-        button {
-            padding: 8px 14px;
-            cursor: pointer;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #e8edf7;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-        
-
-        /* Links used as action buttons */
-        .page-actions a,
-        a.btn {
-            display: inline-block;
-            padding: 8px 14px;
-            margin: 4px;
-            background-color: #e8edf7;
-            color: #172554;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .page-actions a:hover,
-        a.btn:hover {
-            background-color: #d1dbef;
-            text-decoration: underline;
-        }
-
-    </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 
 <body>
-    <header>
+    <header class="site-header">
         {% include 'partials/navbar.html' %}
     </header>
 
-    <main>
+    <main class="page-container">
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer>
+    <footer class="site-footer">
         {% include 'partials/footer.html' %}
     </footer>
 </body>

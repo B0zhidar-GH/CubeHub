@@ -1,0 +1,193 @@
+[1mdiff --git a/cubehub/urls.py b/cubehub/urls.py[m
+[1mindex c704245..3a0044a 100644[m
+[1m--- a/cubehub/urls.py[m
+[1m+++ b/cubehub/urls.py[m
+[36m@@ -24,5 +24,5 @@[m [murlpatterns = [[m
+     path('', views.home, name='home'),[m
+     path('cubers/', include('cubers.urls')),[m
+     path('cubes/', include('cubes.urls')),[m
+[31m-    [m
+ ][m
+[32m+[m[32mhandler404 = 'cubehub.views.custom_404'[m
+[1mdiff --git a/cubehub/views.py b/cubehub/views.py[m
+[1mindex 2db302a..8f0f92e 100644[m
+[1m--- a/cubehub/views.py[m
+[1m+++ b/cubehub/views.py[m
+[36m@@ -2,4 +2,12 @@[m [mfrom django.http import HttpRequest[m
+ from django.shortcuts import render[m
+ [m
+ def home(request:HttpRequest):[m
+[31m-    return render(request, 'home.html')[m
+\ No newline at end of file[m
+[32m+[m[32m    return render(request, 'home.html')[m
+[32m+[m
+[32m+[m[32mdef custom_404(request: HttpRequest, exception):[m
+[32m+[m
+[32m+[m[32m    return render([m
+[32m+[m[32m        request,[m
+[32m+[m[32m        '404.html',[m
+[32m+[m[32m        status=404[m
+[32m+[m[32m    )[m
+\ No newline at end of file[m
+[1mdiff --git a/cubers/forms.py b/cubers/forms.py[m
+[1mindex faa877e..04f0487 100644[m
+[1m--- a/cubers/forms.py[m
+[1m+++ b/cubers/forms.py[m
+[36m@@ -3,6 +3,129 @@[m [mfrom .models import Cuber[m
+ [m
+ class CuberForm(forms.ModelForm):[m
+ [m
+[32m+[m[32m    registration_date = forms.DateTimeField([m
+[32m+[m[32m        label='Date of registration:',[m
+[32m+[m[32m        required=False,[m
+[32m+[m[32m        disabled=True[m
+[32m+[m[32m    )[m
+[32m+[m
+     class Meta:[m
+         model = Cuber[m
+[31m-        fields = ['first_name', 'last_name', 'country', 'favourite_cube', 'bio'][m
+\ No newline at end of file[m
+[32m+[m[32m        fields = ['first_name', 'last_name', 'country', 'favourite_cube', 'bio'][m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32m        labels = {[m
+[32m+[m[32m            'first_name': 'Enter your first name:',[m
+[32m+[m[32m            'last_name': 'Enter your last name:',[m
+[32m+[m[32m            'country': 'Enter your country:',[m
+[32m+[m[32m            'favourite_cube': 'Enter your favourite cube:',[m
+[32m+[m[32m            'bio': 'Enter your bio(not required):',[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        widgets = {[m
+[32m+[m[32m            'first_name': forms.TextInput([m
+[32m+[m[32m                attrs={[m
+[32m+[m[32m                    'placeholder': 'eg. Alex',[m
+[32m+[m[32m                    'oninvalid': "this.setCustomValidity('First name cannot be empty or have white spaces!')",[m
+[32m+[m[32m                    "oninput": 'this.setCustomValidity("")'}[m
+[32m+[m[32m            ),[m
+[32m+[m
+[32m+[m[32m            'last_name': forms.TextInput([m
+[32m+[m[32m                attrs={[m
+[32m+[m[32m                    'placeholder': 'eg. Ivanov',[m
+[32m+[m[32m                    'oninvalid': "this.setCustomValidity('Last name cannot be empty or have white spaces!')",[m
+[32m+[m[32m                    'oninput': "this.setCustomValidity('')",[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ),[m
+[32m+[m
+[32m+[m[32m            'country': forms.TextInput([m
+[32m+[m[32m                attrs={[m
+[32m+[m[32m                    'placeholder': 'eg. USA',[m
+[32m+[m[32m                    'oninvalid': "this.setCustomValidity('Country cannot be empty or have white spaces!')",[m
+[32m+[m[32m                    'oninput': "this.setCustomValidity('')",[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ),[m
+[32m+[m
+[32m+[m[32m            'favourite_cube': forms.TextInput([m
+[32m+[m[32m                attrs={[m
+[32m+[m[32m                    'placeholder': 'eg. 3x3',[m
+[32m+[m[32m                    'oninvalid': "this.setCustomValidity('Favourite cube name cannot be empty or have white spaces!')",[m
+[32m+[m[32m                    'oninput': "this.setCustomValidity('')",[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ),[m
+[32m+[m
+[32m+[m[32m            'bio': forms.Textarea(attrs={}),[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m
+[32m+[m[32m        error_messages = {[m
+[32m+[m[32m            'first_name': {[m
+[32m+[m[32m                'required': 'First name cannot be empty or have white spaces!',[m
+[32m+[m[32m            },[m
+[32m+[m
+[32m+[m[32m            'last_name': {[m
+[32m+[m[32m                'required': 'Last name cannot be empty or have white spaces!',[m
+[32m+[m[32m            },[m
+[32m+[m
+[32m+[m[32m            'country': {[m
+[32m+[m[32m                'required': 'Country cannot be empty or have white spaces!',[m
+[32m+[m[32m            },[m
+[32m+[m
+[32m+[m[32m            'favourite_cube': {[m
+[32m+[m[32m                'required': 'Favourite cube name cannot be empty or have white spaces!',[m
+[32m+[m[32m            },[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m    def clean_first_name(self):[m
+[32m+[m[32m        value = self.cleaned_data.get('first_name', ' ')[m
+[32m+[m
+[32m+[m[32m        value = value.strip()[m
+[32m+[m
+[32m+[m[32m        if not value:[m
+[32m+[m[32m            raise forms.ValidationError([m
+[32m+[m[32m                'First name cannot be empty or have white spaces!'[m
+[32m+[m[32m            )[m
+[32m+[m
+[32m+[m[32m        return value[m
+[32m+[m
+[32m+[m[32m    def clean_last_name(self):[m
+[32m+[m[32m        value = self.cleaned_data.get('last_name', ' ')[m
+[32m+[m
+[32m+[m[32m        value = value.strip()[m
+[32m+[m
+[32m+[m[32m        if not value:[m
+[32m+[m[32m            raise forms.ValidationError([m
+[32m+[m[32m                'Last name cannot be empty or have white spaces!'[m
+[32m+[m[32m            )[m
+[32m+[m
+[32m+[m[32m        return value[m
+[32m+[m
+[32m+[m[32m    def clean_country(self):[m
+[32m+[m[32m        value = self.cleaned_data.get('country', ' ')[m
+[32m+[m
+[32m+[m[32m        value = value.strip()[m
+[32m+[m
+[32m+[m[32m        if not value:[m
+[32m+[m[32m            raise forms.ValidationError([m
+[32m+[m[32m                'Country cannot be empty or have white spaces!'[m
+[32m+[m[32m            )[m
+[32m+[m
+[32m+[m[32m        return value[m
+[32m+[m
+[32m+[m[32m    def clean_favourite_cube(self):[m
+[32m+[m[32m        value = self.cleaned_data.get('favourite_cube', ' ')[m
+[32m+[m
+[32m+[m[32m        value = value.strip()[m
+[32m+[m
+[32m+[m[32m        if not value:[m
+[32m+[m[32m            raise forms.ValidationError([m
+[32m+[m[32m                'Favourite cube name cannot be empty or have white spaces!'[m
+[32m+[m[32m            )[m
+[32m+[m
+[32m+[m[32m        return value[m
+[32m+[m
+[32m+[m[32m    def clean_bio(self):[m
+[32m+[m[32m        value = self.cleaned_data.get('bio', ' ')[m
+[32m+[m
+[32m+[m[32m        return value[m
+\ No newline at end of file[m
+[1mdiff --git a/cubers/models.py b/cubers/models.py[m
+[1mindex 9fa0df4..2fb189d 100644[m
+[1m--- a/cubers/models.py[m
+[1m+++ b/cubers/models.py[m
+[36m@@ -1,12 +1,32 @@[m
+[32m+[m[32m#from email import message[m
+[32m+[m
+[32m+[m[32m#from django.core import validators[m
+[32m+[m[32mfrom django.core.validators import MaxLengthValidator[m
+ from django.db import models[m
+ [m
+ # Create your models here.[m
+ [m
+ class Cuber(models.Model):[m
+[31m-    first_name = models.CharField(max_length=100)[m
+[31m-    last_name = models.CharField(max_length=100)[m
+[31m-    country = models.CharField(max_length=30)[m
+[31m-    favourite_cube = models.CharField(max_length=20)[m
+[32m+[m[32m    first_name = models.CharField(max_length=100, validators = [[m
+[32m+[m[32m        MaxLengthValidator(limit_value=100,[m
+[32m+[m[32m                           message='This field cannot be longer than 100 characters')[m
+[32m+[m[32m    ])[m
+[32m+[m
+[32m+[m[32m    last_name = models.CharField(max_length=100, validators = [[m
+[32m+[m[32m        MaxLengthValidator(limit_val

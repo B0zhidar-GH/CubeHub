@@ -25,7 +25,9 @@ class CubeForm(forms.ModelForm):
                 attrs={
                     'oninvalid': "this.setCustomValidity('Please, complete this field!')",
                     'oninput': "this.setCustomValidity('')",
+                    #'help_text': 'SAEE'
                 }
+
             ),
 
             'category_event': forms.Select(
@@ -50,6 +52,10 @@ class CubeForm(forms.ModelForm):
                 }
             ),
         }
+
+        #help_texts = {
+            #'cube': 'w'
+        #}
 
         error_messages = {
             'cube': {
@@ -76,3 +82,7 @@ class CubeForm(forms.ModelForm):
                 'Brand cannot be empty or have white spaces!'
             )
         return value
+
+    '''def __init__(self, *args, **kwargs):
+        super().__init__(self, *args, **kwargs)
+        super().fields['cube'].empty_label = 'Select an option:'''''
