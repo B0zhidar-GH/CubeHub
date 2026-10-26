@@ -7,16 +7,29 @@
     <h1>Explore Cubes</h1>
     <p>Browse the cubes in the CubeHub collection.</p>
 
+    <div class="list-controls-grid">
     <!-- Create a cube -->
     <section class="create-section">
         <h2>Add a Cube</h2>
 
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+
+            {% for field in form %}
+                {% if field.name != 'registration_date' %}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </p>
+                {% endif %}
+            {% endfor %}
+
             <button type="submit">Add Cube</button>
         </form>
     </section>
+
+<hr class="section-divider">
 
     <!-- Filter form -->
     <section class="filter-section">
@@ -66,11 +79,13 @@
             <a href="{% url 'cube_list' %}">Reset</a>
         </form>
     </section>
+    </div>
+
 
 
 
     <!-- Cube list -->
-    <section class="cubes-list">
+    <section class="results-section cubes-list">
         <h2>Cube Collection</h2>
 
         {% for cube_item in cubes %}

@@ -9,4 +9,5 @@ urlpatterns = [
 
     path('<int:cuber_id>/delete/', views.cuber_delete, name='cuber_delete'),
     path('<int:cuber_id>/details/', views.cuber_details, name='cuber_details'),
+    #path('add/', views.cuber_create, name='cuber_create')
 ]

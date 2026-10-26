@@ -57,9 +57,6 @@ def cuber_list(request: HttpRequest):
 
 
 
-
-
-
 def cuber_edit(request: HttpRequest, cuber_id):
 
     cuber = get_object_or_404(Cuber, id=cuber_id)

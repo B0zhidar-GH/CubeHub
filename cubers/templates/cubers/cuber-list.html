@@ -6,13 +6,24 @@
 <section class="page-container">
     <h1>Meet the Cubers</h1>
 
+    <div class="list-controls-grid">
     <!-- Create a new cuber -->
     <section class="create-section">
         <h2>Add a Cuber</h2>
 
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+
+            {% for field in form %}
+                {% if field.name != 'registration_date' %}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </p>
+                {% endif %}
+            {% endfor %}
+
 
             <button type="submit">Add Cuber</button>
         </form>
@@ -21,6 +32,9 @@
     <section>
 
     </section>
+
+
+<hr class="section-divider">
 
     <!-- Filter and sort form -->
     <section class="filter-section">
@@ -68,9 +82,11 @@
             <a href="{% url 'cuber_list' %}">Reset</a>
         </form>
     </section>
+    </div>
+
 
     <!-- Cubers list -->
-    <section class="cubers-list">
+    <section class="results-section cubers-list">
         {% for cuber in cubers %}
             <article class="cuber-card">
                 <h2>{{ cuber.first_name }} {{ cuber.last_name }}</h2>

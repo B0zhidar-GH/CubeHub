@@ -8,16 +8,29 @@
     <h1>Solves</h1>
     <p>Explore solve times recorded by the CubeHub community.</p>
 
+    <div class="list-controls-grid">
     <!-- Create a solve -->
     <section class="create-section">
         <h2>Add a Solve</h2>
 
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+
+            {% for field in form %}
+                {% if field.name != 'registration_date' %}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                    </p>
+                {% endif %}
+            {% endfor %}
+
             <button type="submit">Add Solve</button>
         </form>
     </section>
+
+<hr class="section-divider">
 
     <!-- Filter and sort -->
     <section class="filter-section">
@@ -79,11 +92,13 @@
             <a href="{% url 'solve_list' %}">Reset</a>
         </form>
     </section>
+    </div>
+
 
 
 
     <!-- Solves list -->
-    <section class="solves-list">
+    <section class="results-section solves-list">
         <h2>Recorded Solves</h2>
 
         {% for solve in solves %}
